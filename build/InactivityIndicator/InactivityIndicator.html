@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inactivity Indicator</title>
+</head>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div>Inactivity Indicator</div>
+    <div class="popup" id="popup">
+        <p>You have been inactive for quite some time...</p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+</body>
+
+<script>
+    let timeout;
+    const inactivityTime = 5000; // 5 seconds for demonstration. Adjust as needed.
+    const popup = document.getElementById('popup');
+
+    document.addEventListener('mousemove', function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(showPopup, inactivityTime);
+    });
+
+    function showPopup() {
+        popup.style.display = 'block';
+    }
+
+    function closePopup() {
+        popup.style.display = 'none';
+    }
+</script>
+</html>
