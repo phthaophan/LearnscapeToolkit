@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Collector</title>
+    <style>
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .box {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 2px solid black;
+            background-color: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+
+    <script>
+        const container = document.getElementById('container');
+        const totalBoxes = 10; // You can change this value to the number of boxes you want
+        let boxesRemoved = 0;
+
+        for (let i = 0; i < totalBoxes; i++) {
+            const box = document.createElement('div');
+            box.classList.add('box');
+            box.style.left = `${Math.random() * (window.innerWidth - 50)}px`;
+            box.style.top = `${Math.random() * (window.innerHeight - 50)}px`;
+            box.addEventListener('click', function() {
+                container.removeChild(box);
+                boxesRemoved++;
+                if (boxesRemoved === totalBoxes) {
+                    alert('You have collected all items!');
+                }
+            });
+            container.appendChild(box);
+        }
+    </script>
+</body>
+</html>
