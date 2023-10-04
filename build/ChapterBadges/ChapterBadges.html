@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge Collector</title>
+</head>
+<body>
+
+<div id="badgeContainer">
+    <div> Badges: <span id="badgeCount">0</span> </div>
+    <div id="badgeCircles"></div>
+</div>
+
+<section>
+    <h2>Section 1</h2>
+    <p>Content here...</p>
+</section>
+
+<section>
+    <h2>Section 2</h2>
+    <p>Content here...</p>
+</section>
+
+<section>
+    <h2>Section 3</h2>
+    <p>Content here...</p>
+</section>
+
+<style>
+    section {
+        height: 100vh;
+        border: 1px solid #ccc;
+        padding: 20px;
+    }
+
+    #badgeContainer {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #badgeCircles {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+    .badgeCircle {
+        width: 30px;
+        height: 30px;
+        background-color: #007BFF;
+        border-radius: 50%;
+        margin-left: 5px;
+        display: flex;
+    }
+</style>
+
+<script>
+    let sections = document.querySelectorAll('section');
+    let badgeCirclesContainer = document.getElementById('badgeCircles');
+    let badgeCount = 0;
+
+    function checkScroll() {
+        sections.forEach((section, index) => {
+            let rect = section.getBoundingClientRect();
+            if (rect.top < 0 && !section.classList.contains('passed')) {
+                section.classList.add('passed');
+                badgeCount++;
+                document.getElementById('badgeCount').textContent = badgeCount;
+                let badgeCircle = document.createElement('div');
+                badgeCircle.classList.add('badgeCircle');
+                badgeCirclesContainer.appendChild(badgeCircle);
+            }
+        });
+    }
+
+    window.addEventListener('scroll', checkScroll);
+</script>
+
+</body>
+</html>
