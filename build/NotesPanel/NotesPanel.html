@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Panel</title>
+</head>
+
+<body>
+    <div class="notes-panel">
+        <h2>Notes</h2>
+        <textarea id="notes-textarea"></textarea>
+        <div class="button-group">
+            <button id="save-note">Save Note</button>
+            <button id="copy-note">Copy Note</button>
+        </div>
+    </div>
+</body>
+
+<style>
+    .notes-panel {
+        width: 300px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #notes-textarea {
+        width: 80%;
+        height: 150px;
+        padding: 5px;
+        margin-bottom: 10px;
+        resize: none;
+        outline: none;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+
+<script>
+    // Saved to browser's local storage
+    document.getElementById('save-note').addEventListener('click', function() {
+        const noteContent = document.getElementById('notes-textarea').value;
+        localStorage.setItem('userNote', noteContent);
+        alert('Note saved!');
+    });
+
+    // Copies the note to the clipboard 
+    document.getElementById('copy-note').addEventListener('click', function() {
+        const textarea = document.getElementById('notes-textarea');
+        textarea.select();
+        document.execCommand('copy');
+        alert('Note copied!');
+    });
+
+    // Load saved note on page load
+    window.onload = function() {
+        const savedNote = localStorage.getItem('userNote');
+        if (savedNote) {
+            document.getElementById('notes-textarea').value = savedNote;
+        }
+    }
+</script>
+</html>
