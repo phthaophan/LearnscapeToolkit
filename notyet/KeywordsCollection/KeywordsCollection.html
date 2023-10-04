@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keywords Collection</title>
+</head>
+
+<body>
+    <p id="content">
+        This is a sample paragraph. You can highlight any portion of this text, and when you release the mouse button, a collection will be provided below.
+    </p>
+
+    <h3>Keywords:</h3>
+    <div id="collection"></div>
+    <button id="copy-btn" class="action-btn">Copy</button>
+    <button id="save-btn" class="action-btn">Save</button>
+</body>
+
+<style>
+    /* Styling for the delete button */
+    .delete-btn {
+        background-color: white;
+        color: black;
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-left: 100px;
+    }
+
+    /* Styling for the collection box */
+    #collection {
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 300px;
+        height: 150px;
+        overflow-y: auto;
+    }
+
+    /* Styling for the copy and save buttons */
+    .action-btn {
+        margin-top: 10px;
+        padding: 5px 10px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+</style>
+
+<script>
+    const content = document.getElementById('content');
+    const collection = document.getElementById('collection');
+    const copyBtn = document.getElementById('copy-btn');
+    const saveBtn = document.getElementById('save-btn');
+
+    content.addEventListener('mouseup', function() {
+        const selectedText = window.getSelection().toString().trim();
+        
+        if (selectedText) {
+            const collectedText = selectedText.length > 50 ? selectedText.substr(0, 50) + '...' : selectedText;
+            
+            // Create a new collection entry div
+            const collectionEntry = document.createElement('div');
+            
+            // Create a text node for the collected text
+            const textNode = document.createTextNode(collectedText);
+            collectionEntry.appendChild(textNode);
+            
+            // Create a delete button for the collection entry
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'x';
+            deleteButton.className = 'delete-btn';
+            deleteButton.addEventListener('click', function() {
+                collection.removeChild(collectionEntry);
+            });
+            collectionEntry.appendChild(deleteButton);
+            
+            // Append the collection entry to the collection section
+            collection.appendChild(collectionEntry);
+        }
+    });
+
+    copyBtn.addEventListener('click', function() {
+        let keywordsText = '';
+        
+        // Iterate over each child of the collection container
+        for (let i = 0; i < collection.childNodes.length; i++) {
+            const child = collection.childNodes[i];
+            // Check if the child is a DIV (a collection entry)
+            if (child.nodeType === Node.ELEMENT_NODE && child.tagName === 'DIV') {
+                // Append the text content of the collection entry to the keywordsText string
+                summariesText += child.firstChild.nodeValue + '\n'; // child.firstChild.nodeValue gets the text content of the collection entry, excluding the delete button's text
+            }
+        }
+
+        const textArea = document.createElement('textarea');
+        textArea.value = summariesText.trim(); // Remove any trailing newline
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Summaries copied!');
+    });
+
+    // Save all collected keywords to a .txt file
+    saveBtn.addEventListener('click', function() {
+        const summariesText = collection.innerText;
+        const blob = new Blob([summariesText], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'keywords.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    });
+</script>
+</html>
