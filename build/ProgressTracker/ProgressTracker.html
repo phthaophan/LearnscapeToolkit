@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Progress Bar</title>
+</head>
+
+<body>
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <section>
+        <h2>Section 1</h2>
+        <p>Content here...</p>
+    </section>
+
+    <section>
+        <h2>Section 2</h2>
+        <p>Content here...</p>
+    </section>
+
+    <section>
+        <h2>Section 3</h2>
+        <p>Content here...</p>
+    </section>
+</body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        height: 2000px; /* to ensure scrolling */
+    }
+
+    #progress-container {
+        position: fixed;
+        top: 0;
+        left: 35%;  /* Centering the container */
+        right: 35%; /* Centering the container */
+        height: 5px;
+        background-color: #e0e0e0; /* This is a light gray color, change as needed */
+        width: 30%; /* Set width to 30% */
+    }
+
+    #progress-bar {
+        height: 100%; /* Make it fill the height of the container */
+        background-color: #3498db; /* The original blue color for the progress bar */
+        width: 0;
+    }
+
+    section {
+        margin: 50px 0;
+    }
+</style>
+
+<script>
+    const progressBar = document.getElementById('progress-bar');
+    let maxProgress = 0; // Variable to store the maximum scroll percentage reached
+
+    window.addEventListener('scroll', () => {
+        const totalHeight = document.body.scrollHeight - window.innerHeight;
+        const progress = (window.scrollY / totalHeight) * 100;
+
+        // Update maxProgress only if the current progress is greater
+        if (progress > maxProgress) {
+            maxProgress = progress;
+        }
+
+        // Ensure the width doesn't exceed 100% of the container
+        progressBar.style.width = Math.min(maxProgress, 100) + '%';
+    });
+</script>
+</html>
