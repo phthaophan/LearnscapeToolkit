@@ -1,6 +1,10 @@
 # LearnscapeToolkit
 
-The aim of this toolkit is to provide a free to use collection of gamification elements for the browser. The elements are specifically tailored for learning experiences but no creativity should ever be restricted. That is why we would be glad to see the toolkit in different settings, too. 
+The aim of this toolkit is to provide a free and easy to use collection of gamification elements for the browser. The elements are specifically tailored for learning experiences but no creativity should ever be restricted. That is why we would be glad to see the toolkit in different settings, too. 
+
+## Usage
+
+All files have the same structure and are built with simple Javascript in a single HTML file. Download the desired folder for the source code. 
 
 ## Contributing
 
