@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Selection Toggle Highlight</title>
+</head>
+
+<body>
+    <p id="content">
+        This is an example paragraph where certain words get highlighted in a custom color when selected with the mouse and unhighlighted when selected again.
+    </p>
+</body>
+
+<style>
+    .permanent-highlight {
+        background-color: yellow;
+        color: black;
+    }
+</style>
+
+<script>
+    document.getElementById('content').addEventListener('mouseup', function() {
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return;
+        const range = selection.getRangeAt(0);
+        const parentElement = range.commonAncestorContainer.parentElement;
+
+        if (parentElement && parentElement.classList.contains('permanent-highlight')) {
+            // If the selected text is already highlighted, remove the highlight
+            const textNode = document.createTextNode(parentElement.textContent);
+            parentElement.replaceWith(textNode);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        } else {
+            // Otherwise, add the highlight
+            const span = document.createElement('span');
+            span.classList.add('permanent-highlight');
+            range.surroundContents(span);
+            selection.removeAllRanges();
+        }
+    });
+</script>
+
+</html>
+
