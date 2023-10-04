@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Timer</title>
+    <title>Reading Timer</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -18,101 +18,101 @@
 
 <style>
     /* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
 
-#display-time, #time-left {
-    visibility: hidden;
-}
+    #display-time, #time-left {
+        visibility: hidden;
+    }
 </style>
 
 <script>
     const displayTime = document.getElementById('display-time');
-const timeLeft = document.getElementById('time-left');
-const minutesInput = document.getElementById('minutes-input');
-const timerButton = document.getElementById('timer-button');
+    const timeLeft = document.getElementById('time-left');
+    const minutesInput = document.getElementById('minutes-input');
+    const timerButton = document.getElementById('timer-button');
 
-let timeInSeconds;
-let interval;
-let isRunning = false;
+    let timeInSeconds;
+    let interval;
+    let isRunning = false;
 
-function updateDisplay() {
-    let minutes = Math.floor(timeInSeconds / 60);
-    let seconds = timeInSeconds % 60;
-    
-    displayTime.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-}
-
-function countdown() {
-    if (timeInSeconds <= 0) {
-        alert('Time is up!');
-        resetTimer();
-        return;
-    }
-    
-    updateDisplay();
-    timeInSeconds--;
-}
-
-function initializeTimer() {
-    let totalMinutes = parseInt(minutesInput.value, 10);
-
-    if (isNaN(totalMinutes) || totalMinutes <= 0) {
-        alert('Please enter a valid number of minutes.');
-        return false;
+    function updateDisplay() {
+        let minutes = Math.floor(timeInSeconds / 60);
+        let seconds = timeInSeconds % 60;
+        
+        displayTime.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
 
-    timeInSeconds = totalMinutes * 60;
-    timeLeft.textContent = `left of ${totalMinutes} mins`;
-
-    displayTime.style.visibility = 'visible';
-    timeLeft.style.visibility = 'visible';
-    minutesInput.style.display = 'none';  // Hide the input bar
-
-    updateDisplay();
-    return true;
-}
-
-function startTimer() {
-    interval = setInterval(countdown, 1000);
-    timerButton.textContent = "Stop";
-    isRunning = true;
-}
-
-function stopTimer() {
-    clearInterval(interval);
-    timerButton.textContent = "Resume";
-    isRunning = false;
-}
-
-function resetTimer() {
-    clearInterval(interval);
-    timerButton.textContent = "Start Timer";
-    isRunning = false;
-    displayTime.style.visibility = 'hidden';
-    timeLeft.style.visibility = 'hidden';
-    minutesInput.style.display = 'block';
-    minutesInput.value = '';  // Clear the input field
-    timeInSeconds = undefined;  // Reset the time variable
-}
-
-function toggleTimer() {
-    if (isRunning) {
-        stopTimer();
-    } else {
-        if (timeInSeconds === undefined) {
-            if (!initializeTimer()) return;  // If initialization fails, don't proceed
+    function countdown() {
+        if (timeInSeconds <= 0) {
+            alert('Time is up!');
+            resetTimer();
+            return;
         }
-        startTimer();
+        
+        updateDisplay();
+        timeInSeconds--;
     }
-}
+
+    function initializeTimer() {
+        let totalMinutes = parseInt(minutesInput.value, 10);
+
+        if (isNaN(totalMinutes) || totalMinutes <= 0) {
+            alert('Please enter a valid number of minutes.');
+            return false;
+        }
+
+        timeInSeconds = totalMinutes * 60;
+        timeLeft.textContent = `left of ${totalMinutes} mins`;
+
+        displayTime.style.visibility = 'visible';
+        timeLeft.style.visibility = 'visible';
+        minutesInput.style.display = 'none';  // Hide the input bar
+
+        updateDisplay();
+        return true;
+    }
+
+    function startTimer() {
+        interval = setInterval(countdown, 1000);
+        timerButton.textContent = "Stop";
+        isRunning = true;
+    }
+
+    function stopTimer() {
+        clearInterval(interval);
+        timerButton.textContent = "Resume";
+        isRunning = false;
+    }
+
+    function resetTimer() {
+        clearInterval(interval);
+        timerButton.textContent = "Start Timer";
+        isRunning = false;
+        displayTime.style.visibility = 'hidden';
+        timeLeft.style.visibility = 'hidden';
+        minutesInput.style.display = 'block';
+        minutesInput.value = '';  // Clear the input field
+        timeInSeconds = undefined;  // Reset the time variable
+    }
+
+    function toggleTimer() {
+        if (isRunning) {
+            stopTimer();
+        } else {
+            if (timeInSeconds === undefined) {
+                if (!initializeTimer()) return;  // If initialization fails, don't proceed
+            }
+            startTimer();
+        }
+    }
 </script>
 </html>
